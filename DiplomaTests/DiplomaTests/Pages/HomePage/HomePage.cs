@@ -7,8 +7,8 @@ namespace DiplomaTests.Pages.HomePage
     {
         private string MenuName = string.Empty;
 
-        public WebElementWrapper TitleText => FindElement(By.XPath("//div[@class='oxd-topbar-header-title']"));
-        public WebElementWrapper MenuLinks => FindElement(By.XPath($"//ul[@class='oxd-main-menu']//li[normalize-space()='{MenuName}']"));
+        private WebElementWrapper TitleText => FindElement(By.XPath("//div[@class='oxd-topbar-header-title']"));
+        private WebElementWrapper MenuLinks => FindElement(By.XPath($"//ul[@class='oxd-main-menu']//li[normalize-space()='{MenuName}']"));
 
         public HomePage(IWebDriver driver) : base(driver)
         {

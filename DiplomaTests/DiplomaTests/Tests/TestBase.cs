@@ -7,10 +7,12 @@ namespace DiplomaTests.Tests
 {
     public class TestBase
     {
-        protected IWebDriver driver;
-        protected LoginPage loginPage;
-        protected HomePage homePage;
         protected BrowserType browserType;
+        protected IWebDriver driver;
+
+        protected LoginPage loginPage;
+        protected LogoutPage logoutPage;
+        protected HomePage homePage;
 
         public TestBase(BrowserType browser)
         {
@@ -24,6 +26,7 @@ namespace DiplomaTests.Tests
             driver.Navigate().GoToUrl("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
 
             loginPage = new LoginPage(driver);
+            logoutPage = new LogoutPage(driver);
             homePage = new HomePage(driver);
         }
 
