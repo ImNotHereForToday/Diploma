@@ -1,16 +1,17 @@
-﻿using DiplomaTests.Utility;
+﻿using DiplomaTests.Navigation;
+using DiplomaTests.Utility;
 using OpenQA.Selenium;
 
 namespace DiplomaTests.Pages.HomePage
 {
     public class HomePage : PageBase
     {
-        private string MenuName = string.Empty;
-
         private WebElementWrapper TitleText => FindElement(By.XPath("//div[@class='oxd-topbar-header-title']"));
-        private WebElementWrapper MenuLinks => FindElement(By.XPath($"//ul[@class='oxd-main-menu']//li[normalize-space()='{MenuName}']"));
+        private WebElementWrapper QuickLaunchTable => FindElement(By.XPath("//div[@class='oxd-grid-3 orangehrm-quick-launch']"));
 
-        public HomePage(IWebDriver driver) : base(driver)
+        public LeftMenuNavigation LMN => new LeftMenuNavigation();
+
+        public HomePage() : base()
         {
         }
 
@@ -19,10 +20,9 @@ namespace DiplomaTests.Pages.HomePage
             return TitleText.GetText();
         }
 
-        public void ClickMenuLinks(string menuName)
+        public void ValidateThatElementsAreDisplayed()
         {
-            this.MenuName = menuName;
-            MenuLinks.Click();
+            QuickLaunchTable.IsDisplayed();
         }
     }
 }

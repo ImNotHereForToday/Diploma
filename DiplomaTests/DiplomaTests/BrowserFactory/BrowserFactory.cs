@@ -2,35 +2,39 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
+using System.Threading;
 
 namespace DiplomaTests.BrowserFactory
 {
+    
     public class BrowserFactory
     {
-        public static IWebDriver CreateDriver(BrowserType browserType)
+        public static IWebDriver Driver { get; set; }
+        public static WebDriverWait GetWait(int timeout = 5)
         {
-            IWebDriver driver;
-
+            return new WebDriverWait(Driver, TimeSpan.FromSeconds(timeout));
+        }
+        public static void InitializeDriver(BrowserType browserType)
+        {
             switch (browserType)
             {
                 case BrowserType.Chrome:
                     var chromeOptions = new ChromeOptions();
                     chromeOptions.AddArgument("--start-maximized");
                     chromeOptions.AddUserProfilePreference("profile.default_content_settings.popups", 0);
-                    driver = new ChromeDriver(chromeOptions);
+                    Driver = new ChromeDriver(chromeOptions);
                     break;
 
                 case BrowserType.Firefox:
                     var firefoxOptions = new FirefoxOptions();
                     firefoxOptions.AddArgument("--start-maximized");
-                    driver = new FirefoxDriver(firefoxOptions);
+                    Driver = new FirefoxDriver(firefoxOptions);
                     break;
 
                 default:
                     throw new ArgumentException($"Browser '{browserType}' is not supported.");
             }
-
-            return driver;
         }
     }
 }

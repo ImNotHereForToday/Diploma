@@ -10,8 +10,13 @@ namespace DiplomaTests.Pages.Authentication
         private WebElementWrapper UsernameField => FindElement(By.XPath("//input[@name='username']"));
         private WebElementWrapper PasswordField => FindElement(By.XPath("//input[@name='password']"));
         private WebElementWrapper LoginButton => FindElement(By.XPath("//button[normalize-space()='Login']"));
+        private WebElementWrapper ForgotPasswordButton => FindElement(By.XPath("//p[@class='oxd-text oxd-text--p orangehrm-login-forgot-header']"));
+        private WebElementWrapper ResetPasswordButton => FindElement(By.XPath("//button[@type='submit']"));
+        private WebElementWrapper ConfirmationMessageTitle => FindElement(By.XPath("//h6"));
 
-        public LoginPage(IWebDriver driver) : base(driver)
+        readonly By ErrorMessage = By.XPath("//p[text()='Invalid credentials']");
+
+        public LoginPage() : base()
         {
         }
 
@@ -42,9 +47,24 @@ namespace DiplomaTests.Pages.Authentication
             LoginButton.Click();
         }
 
-        public void GetInvalidLoginMessage()
+        public bool GetInvalidLoginMessage()
         {
-            IsElementDisplayed(By.XPath("//p[text()='Invalid credentials']"));
+            return new WebElementWrapper().IsElementDisplayed(ErrorMessage);
+        }
+
+        public void ClickForgotPasswordButton()
+        {
+            ForgotPasswordButton.Click();
+        }
+
+        public void ClickResetPassword()
+        {
+            ResetPasswordButton.Click();
+        }
+
+        public void AssertConfirmationMessage(string message)
+        {
+            Assert.That(ConfirmationMessageTitle.GetText(), Is.EqualTo(message));
         }
     }
 }

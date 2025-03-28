@@ -7,11 +7,10 @@ namespace DiplomaTests.Pages
 {
     public class PageBase
     {
-        protected IWebDriver Driver;
+        protected IWebDriver Driver = BrowserFactory.BrowserFactory.Driver;
 
-        public PageBase(IWebDriver driver)
+        public PageBase()
         {
-            Driver = driver ?? throw new ArgumentNullException(nameof(driver));
         }
 
         protected WebElementWrapper FindElement(By locator, int timeoutInSeconds = 10)
@@ -26,21 +25,6 @@ namespace DiplomaTests.Pages
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeoutInSeconds));
 
             return wait.Until(ExpectedConditions.ElementIsVisible(locator));
-        }
-
-        public bool IsElementDisplayed(By locator, int timeout = 5)
-        {
-            try
-            {
-                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeout));
-                var element = wait.Until(ExpectedConditions.ElementIsVisible(locator));
-                return element.Displayed;
-            }
-            catch (WebDriverTimeoutException)
-            {
-
-                return false;
-            }
         }
     }
 }

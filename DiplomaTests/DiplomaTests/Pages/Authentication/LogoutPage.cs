@@ -14,7 +14,7 @@ namespace DiplomaTests.Pages.Authentication
         private WebElementWrapper LogoutButton => FindElement(By.XPath("//a[normalize-space()='Logout']"));
         private WebElementWrapper LoginTitle => FindElement(By.XPath("//h5[@class='oxd-text oxd-text--h5 orangehrm-login-title']"));
 
-        public LogoutPage(IWebDriver driver) : base(driver)
+        public LogoutPage() : base()
         {
         }
 

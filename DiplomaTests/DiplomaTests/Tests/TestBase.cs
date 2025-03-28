@@ -1,5 +1,6 @@
 ﻿using DiplomaTests.Pages.Authentication;
 using DiplomaTests.Pages.HomePage;
+using DiplomaTests.Pages.PIMPage;
 using DiplomaTests.Utility;
 using OpenQA.Selenium;
 
@@ -8,8 +9,6 @@ namespace DiplomaTests.Tests
     public class TestBase
     {
         protected BrowserType browserType;
-        protected IWebDriver driver;
-
         protected LoginPage loginPage;
         protected LogoutPage logoutPage;
         protected HomePage homePage;
@@ -22,18 +21,18 @@ namespace DiplomaTests.Tests
         [SetUp] 
         public void SetUp()
         {
-            driver = BrowserFactory.BrowserFactory.CreateDriver(browserType);
-            driver.Navigate().GoToUrl("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+            BrowserFactory.BrowserFactory.InitializeDriver(browserType);
+            BrowserFactory.BrowserFactory.Driver.Navigate().GoToUrl("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
 
-            loginPage = new LoginPage(driver);
-            logoutPage = new LogoutPage(driver);
-            homePage = new HomePage(driver);
+            loginPage = new LoginPage();
+            logoutPage = new LogoutPage();
+            homePage = new HomePage();
         }
 
         [TearDown]
         public void TearDown()
         {
-            driver?.Dispose();
+            BrowserFactory.BrowserFactory.Driver.Dispose();
         }
 
         protected void LoginAsValidUser()
