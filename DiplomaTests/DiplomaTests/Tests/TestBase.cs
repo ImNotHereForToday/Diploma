@@ -1,8 +1,6 @@
 ﻿using DiplomaTests.Pages.Authentication;
 using DiplomaTests.Pages.HomePage;
-using DiplomaTests.Pages.PIMPage;
 using DiplomaTests.Utility;
-using OpenQA.Selenium;
 
 namespace DiplomaTests.Tests
 {

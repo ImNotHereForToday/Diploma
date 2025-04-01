@@ -7,13 +7,16 @@ namespace DiplomaTests.Pages
 {
     public class PageBase
     {
+        public WebElementWrapper AddButton => FindElement(By.XPath("//i[@class='oxd-icon bi-plus oxd-button-icon']"));
+        public WebElementWrapper SaveButton => FindElement(By.XPath("//button[@type='submit']"));
+
         protected IWebDriver Driver = BrowserFactory.BrowserFactory.Driver;
 
         public PageBase()
         {
         }
 
-        protected WebElementWrapper FindElement(By locator, int timeoutInSeconds = 10)
+        public WebElementWrapper FindElement(By locator, int timeoutInSeconds = 10)
         {
             var element = WaitForElementToBeVisible(locator, timeoutInSeconds);
 

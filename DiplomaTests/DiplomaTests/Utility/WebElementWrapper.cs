@@ -1,8 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using System.Threading;
-using System.Xml.Linq;
 
 namespace DiplomaTests.Utility
 {
@@ -21,7 +19,7 @@ namespace DiplomaTests.Utility
 
         public void Click()
         {
-            if (element.Displayed && element.Enabled)
+            if (element.Displayed && element.Enabled && element.Size.Height > 0)
             {
                 element.Click();
             }
@@ -80,7 +78,7 @@ namespace DiplomaTests.Utility
             selectElement.SelectByValue(value);
         }
 
-        public bool IsElementDisplayed(By by , int timeout = 5)
+        public bool IsElementDisplayed(By by, int timeout = 5)
         {
             try
             {
@@ -95,13 +93,42 @@ namespace DiplomaTests.Utility
             }
         }
 
-        public void SelectCustomDropdownOption(string optionText)
+        public void SelectCustomDropdownOptionByClick(string optionText)
         {
             string xpath = $".//a[@role='menuitem' and normalize-space(text())='{optionText}'] | .//div[@role='option' and .//span[normalize-space(text())='{optionText}']]";
             var wait = BrowserFactory.BrowserFactory.GetWait();
             element.Click();
             IWebElement selectedOption = wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(xpath)));
             selectedOption.Click();
+        }
+
+        public void SelectCustomDropdownOptionBySendKeys(string optionText)
+        {
+            string xpath = $".//a[@role='menuitem' and normalize-space(text())='{optionText}'] | .//div[@role='option' and .//span[normalize-space(text())='{optionText}']]";
+            var wait = BrowserFactory.BrowserFactory.GetWait();
+            element.SendKeys(optionText);
+            IWebElement selectedOption = wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(xpath)));
+            selectedOption.Click();
+        }
+
+        public WebElementWrapper FindElement(By by)
+        {
+            return new WebElementWrapper(element.FindElement(by));
+        }
+
+        public bool Selected
+        {
+            get
+            {
+                try
+                {
+                    return element.Selected;
+                }
+                catch (Exception ex)
+                {
+                    throw new InvalidOperationException("Not selected", ex);
+                }
+            }
         }
     }
 }

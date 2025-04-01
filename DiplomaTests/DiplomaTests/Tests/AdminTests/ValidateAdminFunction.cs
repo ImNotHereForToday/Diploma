@@ -1,9 +1,4 @@
 ﻿using DiplomaTests.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DiplomaTests.Tests.AdminTests
 {
@@ -22,7 +17,6 @@ namespace DiplomaTests.Tests.AdminTests
             validateAdminFunction.adminPage.UserManagmentNavigationExist();
             validateAdminFunction.adminPage.GoToDropDownLink("span" , "Job" , "Job Titles");
             validateAdminFunction.adminPage.AssertThatTitleExists("Job Titles");
-
         }
     }
 }

@@ -1,12 +1,5 @@
-﻿using DiplomaTests.Navigation;
-using DiplomaTests.Utility;
+﻿using DiplomaTests.Utility;
 using OpenQA.Selenium;
-using OpenQA.Selenium.DevTools.V132.Debugger;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DiplomaTests.Pages.PIMPage
 {
@@ -15,25 +8,29 @@ namespace DiplomaTests.Pages.PIMPage
         private object NameAndMiddleName;
         private object TabName;
 
-        private WebElementWrapper AddButton => FindElement(By.XPath("//i[@class='oxd-icon bi-plus oxd-button-icon']"));
         private WebElementWrapper InputFirstName => FindElement(By.XPath("//input[@name='firstName']"));
         private WebElementWrapper InputMiddleName => FindElement(By.XPath("//input[@name='middleName']"));
         private WebElementWrapper InputLastName => FindElement(By.XPath("//input[@name='lastName']"));
-        public WebElementWrapper SubmitButton => FindElement(By.XPath("//button[@type='submit']"));
+        private WebElementWrapper SubmitButton => FindElement(By.XPath("//button[@type='submit']"));
         private WebElementWrapper GoToEmployeeList => FindElement(By.XPath("//a[@class='oxd-topbar-body-nav-tab-item' and normalize-space()='Employee List']"));
         private WebElementWrapper SearchForElmployee => FindElement(By.XPath("(//input[@placeholder='Type for hints...'])[1]"));
         private WebElementWrapper DropDownEmployeeName => FindElement(By.XPath($"//div[@role='option']//span[contains(text(), '{NameAndMiddleName}')]"));
-        private WebElementWrapper DeleteEmployeeButton => FindElement(By.XPath("//i[@class='oxd-icon bi-trash']"));
         private WebElementWrapper ConfirmDeleteEmployee => FindElement(By.XPath("//i[@class='oxd-icon bi-trash oxd-button-icon']"));
-        private WebElementWrapper EditEmployeeButton => FindElement(By.XPath("//i[@class='oxd-icon bi-pencil-fill']"));
         private WebElementWrapper NavigationTab => FindElement(By.XPath($"//div[@role='tab' and normalize-space()='{TabName}']"));
         private WebElementWrapper AddSkillButton => FindElement(By.XPath("//div[@class='orangehrm-action-header' and .//h6[normalize-space()='Skills']]//button"));
         private WebElementWrapper OpenSkillDropDown => FindElement(By.XPath("//div[@class='oxd-select-text oxd-select-text--active']"));
+        private WebElementWrapper ConfigurationDropDown => FindElement(By.XPath("//span[@class='oxd-topbar-body-nav-tab-item']"));
+        private WebElementWrapper InputFieldName => FindElement(By.XPath("//div[@class='orangehrm-card-container']//input"));
+        private WebElementWrapper ScreenDropDown => FindElement(By.XPath("//div[@class='oxd-input-group oxd-input-field-bottom-space' and .//label[contains(text(),'Screen')]]//div[@class='oxd-select-text-input']"));
+        private WebElementWrapper TypeDropDown => FindElement(By.XPath("//div[@class='oxd-input-group oxd-input-field-bottom-space' and .//label[contains(text(),'Type')]]//div[@class='oxd-select-text-input']"));
 
         readonly By AlertOnCreatingEmployee = By.XPath("//div[@class='oxd-toast-start']");
         readonly By AlertNoRecordsFound = By.XPath("//div[@aria-live='assertive']");
         readonly By SkillFound = By.XPath("//div[@role='row' and normalize-space()='Java']");
+
         public PIMPage EmployeeDetails => new PIMPage();
+
+        private TableHelper _tableHelper = new TableHelper();
 
         public PIMPage() : base()
         {
@@ -51,14 +48,14 @@ namespace DiplomaTests.Pages.PIMPage
             InputLastName.SendKeys(LastName);
         }
 
-        public void InteractWithEmployeeDetails()
+        public void SubmitDetails()
         {
             SubmitButton.Click();
         }
 
         public bool AssertSuccessfullyAddedEmployeeAlert()
         {
-            return new WebElementWrapper().IsElementDisplayed(AlertOnCreatingEmployee);  
+            return new WebElementWrapper().IsElementDisplayed(AlertOnCreatingEmployee);
         }
 
         public void GoToEmployeeListPage()
@@ -77,13 +74,9 @@ namespace DiplomaTests.Pages.PIMPage
             DropDownEmployeeName.Click();
         }
 
-        public bool DoesEmployeeExists(string firstAndMiddleName)
+        public bool DoesFieldExists(string firstAndMiddleName)
         {
-            WebElementWrapper wrapper = new WebElementWrapper();
-            string xpath = $"//div[@role='row' and .//div[text()='{firstAndMiddleName}']]";
-            By employeeRow = By.XPath(xpath);
-
-            return wrapper.IsElementDisplayed(employeeRow);
+            return _tableHelper.DoesRowExist(firstAndMiddleName);
         }
 
         public bool DoesNoRecordsFoundExists()
@@ -91,15 +84,38 @@ namespace DiplomaTests.Pages.PIMPage
             return new WebElementWrapper().IsElementDisplayed(AlertNoRecordsFound);
         }
 
-        public void DeleteEmployeeFromList()
+        public bool DoesRecordNotExist(string vacancyName, int timeout = 3)
         {
-            DeleteEmployeeButton.Click();
+            try
+            {
+                var wait = BrowserFactory.BrowserFactory.GetWait(timeout);
+                var result = wait.Until(driver =>
+                {
+                    return !_tableHelper.DoesRowExist(vacancyName);
+                });
+
+                return result;
+            }
+            catch (WebDriverTimeoutException)
+            {
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
+        public void DeleteFieldFromList(string employeeFullName)
+        {
+            _tableHelper.ClickActionButtonInRow(employeeFullName, "bi-trash");
             ConfirmDeleteEmployee.Click();
         }
 
-        public void EditEmployee()
+        public void EditEmployee(string employeeFullName)
         {
-            EditEmployeeButton.Click();
+            _tableHelper.ClickActionButtonInRow(employeeFullName, "bi-pencil-fill");
         }
 
         public void NavigateToTab(string tabName)
@@ -115,12 +131,24 @@ namespace DiplomaTests.Pages.PIMPage
 
         public void SelectSkill(string skillName)
         {
-            OpenSkillDropDown.SelectCustomDropdownOption(skillName);
+            OpenSkillDropDown.SelectCustomDropdownOptionByClick(skillName);
         }
 
         public bool DoesNewSkillExists()
         {
             return new WebElementWrapper().IsElementDisplayed(SkillFound);
+        }
+
+        public void GoToCustomFields()
+        {
+            ConfigurationDropDown.SelectCustomDropdownOptionByClick("Custom Fields");
+        }
+
+        public void FillOutCustomFieldForm(string fieldName)
+        {
+            InputFieldName.SendKeys(fieldName);
+            ScreenDropDown.SelectCustomDropdownOptionByClick("Personal Details");
+            TypeDropDown.SelectCustomDropdownOptionByClick("Text or Number");
         }
     }
 }
