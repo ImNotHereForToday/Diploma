@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+using System.Threading;
 
 namespace DiplomaTests.Utility
 {
@@ -63,7 +64,12 @@ namespace DiplomaTests.Utility
 
         public bool IsDisplayed()
         {
-            return element.Displayed;
+            if (!element.Displayed)
+            {
+                throw new Exception("Element is not displayed.");
+            }
+
+            return true;
         }
 
         public void SelectByText(string text)
@@ -113,6 +119,9 @@ namespace DiplomaTests.Utility
 
         public WebElementWrapper FindElement(By by)
         {
+            var wait = BrowserFactory.BrowserFactory.GetWait();
+            wait.Until(ExpectedConditions.ElementIsVisible(by));
+
             return new WebElementWrapper(element.FindElement(by));
         }
 

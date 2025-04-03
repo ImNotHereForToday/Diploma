@@ -15,16 +15,16 @@ namespace DiplomaTests.Tests.PIMTests
         {
             Employee employee = EmployeeData.PredefinedEmployee;
             LoginAsValidUser();
-            var addNewEmployeePage = homePage.LMN.CLickPIMMenu("PIM");
+            var addNewEmployeePage = homePage.LMN.CLickPIMMenu();
             addNewEmployeePage.ClickAddButton();
-            addNewEmployeePage.EmployeeDetails.EnterEmployeeDetails(employee.FirstName, employee.MiddleName, employee.LastName);
-            addNewEmployeePage.EmployeeDetails.SubmitDetails();
-            addNewEmployeePage.EmployeeDetails.AssertSuccessfullyAddedEmployeeAlert();
-            addNewEmployeePage.EmployeeDetails.GoToEmployeeListPage();
-            addNewEmployeePage.EmployeeDetails.SearchForEmployee(employee.FullName);
-            addNewEmployeePage.EmployeeDetails.SelectEmployeeFromDropDown();
-            addNewEmployeePage.EmployeeDetails.SubmitDetails();
-            addNewEmployeePage.EmployeeDetails.DoesFieldExists(employee.FullName);
+            addNewEmployeePage.EnterEmployeeDetails(employee.FirstName, employee.MiddleName, employee.LastName);
+            addNewEmployeePage.SubmitDetails();
+            addNewEmployeePage.AssertSuccessfullyAddedEmployeeAlert();
+            addNewEmployeePage.GoToEmployeeListPage();
+            addNewEmployeePage.SearchForEmployee(employee.FullName);
+            addNewEmployeePage.SelectEmployeeFromDropDown();
+            addNewEmployeePage.SubmitDetails();
+            addNewEmployeePage.DoesFieldExists(employee.FullName);
         }
 
         [Test, Order(2)]
@@ -32,18 +32,18 @@ namespace DiplomaTests.Tests.PIMTests
         {
             Employee employee = EmployeeData.PredefinedEmployee;
             LoginAsValidUser();
-            var addNewEmployeePage = homePage.LMN.CLickPIMMenu("PIM");
-            addNewEmployeePage.EmployeeDetails.GoToEmployeeListPage();
-            addNewEmployeePage.EmployeeDetails.SearchForEmployee(employee.FullName);
-            addNewEmployeePage.EmployeeDetails.SelectEmployeeFromDropDown();
-            addNewEmployeePage.EmployeeDetails.SubmitDetails();
-            addNewEmployeePage.EmployeeDetails.DoesFieldExists(employee.FullName);
-            addNewEmployeePage.EmployeeDetails.EditEmployee(employee.FullName);
-            addNewEmployeePage.EmployeeDetails.NavigateToTab("Qualifications");
-            addNewEmployeePage.EmployeeDetails.AddSkill();
-            addNewEmployeePage.EmployeeDetails.SelectSkill("Java");
-            addNewEmployeePage.EmployeeDetails.SubmitDetails();
-            addNewEmployeePage.EmployeeDetails.DoesNewSkillExists();
+            var addNewEmployeePage = homePage.LMN.CLickPIMMenu();
+            addNewEmployeePage.GoToEmployeeListPage();
+            addNewEmployeePage.SearchForEmployee(employee.FullName);
+            addNewEmployeePage.SelectEmployeeFromDropDown();
+            addNewEmployeePage.SubmitDetails();
+            addNewEmployeePage.DoesFieldExists(employee.FullName);
+            addNewEmployeePage.EditEmployee(employee.FullName);
+            addNewEmployeePage.NavigateToTab("Qualifications");
+            addNewEmployeePage.AddSkill();
+            addNewEmployeePage.SelectSkill("Java");
+            addNewEmployeePage.SubmitDetails();
+            addNewEmployeePage.DoesNewSkillExists();
         }
 
         [Test, Order(3)]
@@ -51,15 +51,15 @@ namespace DiplomaTests.Tests.PIMTests
         {
             Employee employee = EmployeeData.PredefinedEmployee;
             LoginAsValidUser();
-            var addNewEmployeePage = homePage.LMN.CLickPIMMenu("PIM");
-            addNewEmployeePage.EmployeeDetails.GoToEmployeeListPage();
-            addNewEmployeePage.EmployeeDetails.SearchForEmployee(employee.FullName);
-            addNewEmployeePage.EmployeeDetails.SelectEmployeeFromDropDown();
-            addNewEmployeePage.EmployeeDetails.SubmitDetails();
-            addNewEmployeePage.EmployeeDetails.DoesFieldExists(employee.FullName);
-            addNewEmployeePage.EmployeeDetails.EditEmployee(employee.FullName);
-            addNewEmployeePage.EmployeeDetails.SubmitDetails();
-            addNewEmployeePage.EmployeeDetails.AssertSuccessfullyAddedEmployeeAlert();
+            var addNewEmployeePage = homePage.LMN.CLickPIMMenu();
+            addNewEmployeePage.GoToEmployeeListPage();
+            addNewEmployeePage.SearchForEmployee(employee.FullName);
+            addNewEmployeePage.SelectEmployeeFromDropDown();
+            addNewEmployeePage.SubmitDetails();
+            addNewEmployeePage.DoesFieldExists(employee.FullName);
+            addNewEmployeePage.EditEmployee(employee.FullName);
+            addNewEmployeePage.SubmitDetails();
+            addNewEmployeePage.AssertSuccessfullyAddedEmployeeAlert();
         }
 
         [Test, Order(4)]
@@ -67,15 +67,15 @@ namespace DiplomaTests.Tests.PIMTests
         {
             Employee employee = EmployeeData.PredefinedEmployee;
             LoginAsValidUser();
-            var addNewEmployeePage = homePage.LMN.CLickPIMMenu("PIM");
-            addNewEmployeePage.EmployeeDetails.GoToEmployeeListPage();
-            addNewEmployeePage.EmployeeDetails.SearchForEmployee(employee.FullName);
-            addNewEmployeePage.EmployeeDetails.SelectEmployeeFromDropDown();
-            addNewEmployeePage.EmployeeDetails.SubmitDetails();
-            addNewEmployeePage.EmployeeDetails.DoesFieldExists(employee.FullName);
-            addNewEmployeePage.EmployeeDetails.SearchForEmployee("12345678");
-            addNewEmployeePage.EmployeeDetails.SubmitDetails();
-            addNewEmployeePage.EmployeeDetails.DoesNoRecordsFoundExists();
+            var addNewEmployeePage = homePage.LMN.CLickPIMMenu();
+            addNewEmployeePage.GoToEmployeeListPage();
+            addNewEmployeePage.SearchForEmployee(employee.FullName);
+            addNewEmployeePage.SelectEmployeeFromDropDown();
+            addNewEmployeePage.SubmitDetails();
+            addNewEmployeePage.DoesFieldExists(employee.FullName);
+            addNewEmployeePage.SearchForEmployee("12345678");
+            addNewEmployeePage.SubmitDetails();
+            addNewEmployeePage.DoesNoRecordsFoundExists();
         }
 
         [Test, Order(5)]
@@ -83,16 +83,16 @@ namespace DiplomaTests.Tests.PIMTests
         {
             Employee employee = EmployeeData.PredefinedEmployee;
             LoginAsValidUser();
-            var addNewEmployeePage = homePage.LMN.CLickPIMMenu("PIM");
-            addNewEmployeePage.EmployeeDetails.GoToEmployeeListPage();
-            addNewEmployeePage.EmployeeDetails.SearchForEmployee(employee.FullName);
-            addNewEmployeePage.EmployeeDetails.SelectEmployeeFromDropDown();
-            addNewEmployeePage.EmployeeDetails.SubmitDetails();
-            addNewEmployeePage.EmployeeDetails.DoesFieldExists(employee.FullName);
-            addNewEmployeePage.EmployeeDetails.DeleteFieldFromList(employee.FullName);
-            addNewEmployeePage.EmployeeDetails.SearchForEmployee(employee.FullName);
-            addNewEmployeePage.EmployeeDetails.SubmitDetails();
-            addNewEmployeePage.EmployeeDetails.DoesNoRecordsFoundExists();
+            var addNewEmployeePage = homePage.LMN.CLickPIMMenu();
+            addNewEmployeePage.GoToEmployeeListPage();
+            addNewEmployeePage.SearchForEmployee(employee.FullName);
+            addNewEmployeePage.SelectEmployeeFromDropDown();
+            addNewEmployeePage.SubmitDetails();
+            addNewEmployeePage.DoesFieldExists(employee.FullName);
+            addNewEmployeePage.DeleteFieldFromList(employee.FullName);
+            addNewEmployeePage.SearchForEmployee(employee.FullName);
+            addNewEmployeePage.SubmitDetails();
+            addNewEmployeePage.DoesNoRecordsFoundExists();
         }
     }
 }

@@ -15,14 +15,8 @@ namespace DiplomaTests.Pages.HomePage
         {
         }
 
-        public string GetTitleText()
-        {
-            return TitleText.GetText();
-        }
+        public string GetTitleText() => TitleText.GetText();
 
-        public void ValidateThatElementsAreDisplayed()
-        {
-            QuickLaunchTable.IsDisplayed();
-        }
+        public void ValidateThatElementsAreDisplayed() => QuickLaunchTable.IsDisplayed();
     }
 }

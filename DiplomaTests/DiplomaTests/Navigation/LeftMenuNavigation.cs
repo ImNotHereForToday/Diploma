@@ -1,5 +1,5 @@
 ﻿using DiplomaTests.Pages;
-using DiplomaTests.Pages.AdminPage;
+using DiplomaTests.Pages;
 using DiplomaTests.Pages.HomePage;
 using DiplomaTests.Pages.LeavePage;
 using DiplomaTests.Pages.PerformancePage;
@@ -10,64 +10,68 @@ using OpenQA.Selenium;
 
 namespace DiplomaTests.Navigation
 {
+    public static class MenuConstants
+    {
+        public const string PIM = "PIM";
+        public const string ADMIN = "Admin";
+        public const string DASHBOARD = "Dashboard";
+        public const string PERFORMANCE = "Performance";
+        public const string RECRUITMENT = "Recruitment";
+        public const string LEAVE = "Leave";
+    }
+
     public class LeftMenuNavigation : PageBase
     {
-        private string MenuName = string.Empty;
+        private const string menuItem = "//ul[@class='oxd-main-menu']//li[normalize-space()='{0}']";
+        private const string NavigationSearchXPath = "//nav//input[@placeholder='Search']";
 
-        private WebElementWrapper MenuLinks => FindElement(By.XPath($"//ul[@class='oxd-main-menu']//li[normalize-space()='{MenuName}']"));
-        private WebElementWrapper NavigationSearch => FindElement(By.XPath($"//nav//input[@placeholder='Search']"));
-
+        private WebElementWrapper GetMenuElement(string menuName) => FindElement(By.XPath(string.Format(menuItem, menuName)));
+        
         public void SeachForNavigationOption(string menuName)
         {
-            MenuName = menuName;
-            NavigationSearch.SendKeys(menuName);
-            Assert.That(MenuLinks.GetText(), Is.EqualTo(menuName));
+            var navigationSearch = FindElement(By.XPath(NavigationSearchXPath));
+            navigationSearch.SendKeys(menuName);
+            Assert.That(GetMenuElement(menuName).GetText(), Is.EqualTo(menuName));
         }
 
-        public PIMPage CLickPIMMenu(string menuName)
+        public PIMPage CLickPIMMenu()
         {
-            this.MenuName = menuName;
-            MenuLinks.Click();
+            GetMenuElement(MenuConstants.PIM).Click();
 
             return new PIMPage();
         }
 
-        public AdminPage CLickAdminMenu(string menuName)
+        public AdminPage CLickAdminMenu()
         {
-            this.MenuName = menuName;
-            MenuLinks.Click();
+            GetMenuElement(MenuConstants.ADMIN).Click();
 
             return new AdminPage();
         }
 
-        public HomePage CLickDashboardMenu(string menuName)
+        public HomePage CLickDashboardMenu()
         {
-            this.MenuName = menuName;
-            MenuLinks.Click();
+            GetMenuElement(MenuConstants.DASHBOARD).Click();
 
             return new HomePage();
         }
 
-        public PerformacePage CLickPerformanceMenu(string menuName)
+        public PerformacePage CLickPerformanceMenu()
         {
-            this.MenuName = menuName;
-            MenuLinks.Click();
+            GetMenuElement(MenuConstants.PERFORMANCE).Click();
 
             return new PerformacePage();
         }
 
-        public RecruitmentPage CLickRecruitmentMenu(string menuName)
+        public RecruitmentPage CLickRecruitmentMenu()
         {
-            this.MenuName = menuName;
-            MenuLinks.Click();
+            GetMenuElement(MenuConstants.RECRUITMENT).Click();
 
             return new RecruitmentPage();
         }
 
-        public LeavePage CLickLeaveMenu(string menuName)
+        public LeavePage CLickLeaveMenu()
         {
-            this.MenuName = menuName;
-            MenuLinks.Click();
+            GetMenuElement(MenuConstants.LEAVE).Click();
 
             return new LeavePage();
         }

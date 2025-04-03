@@ -17,18 +17,18 @@ namespace DiplomaTests.Tests.RecruitmentTests
             Employee employee = EmployeeData.PredefinedEmployee;
             PIMPage addEmployee = new PIMPage();
             LoginAsValidUser();
-            var recruitmentPage = homePage.LMN.CLickRecruitmentMenu("Recruitment");
-            recruitmentPage.Recruitment.ClickAddButton();
-            addEmployee.EmployeeDetails.EnterEmployeeDetails(employee.FirstName, employee.MiddleName, employee.LastName);
-            recruitmentPage.Recruitment.InputEmailData("email@email.com");
-            recruitmentPage.Recruitment.SaveData();
-            recruitmentPage.Recruitment.WaitForsuccessfulAlert();
-            recruitmentPage.Recruitment.GoToRecruitmentNavigators("Candidates");
-            addEmployee.EmployeeDetails.DoesFieldExists(employee.WholeName);
-            addEmployee.EmployeeDetails.DeleteFieldFromList(employee.WholeName);
-            addEmployee.EmployeeDetails.SearchForEmployee(employee.FullName);
-            addEmployee.EmployeeDetails.SubmitDetails();
-            addEmployee.EmployeeDetails.DoesNoRecordsFoundExists();
+            var recruitmentPage = homePage.LMN.CLickRecruitmentMenu();
+            recruitmentPage.ClickAddButton();
+            addEmployee.EnterEmployeeDetails(employee.FirstName, employee.MiddleName, employee.LastName);
+            recruitmentPage.InputEmailData("email@email.com");
+            recruitmentPage.SaveData();
+            recruitmentPage.WaitForsuccessfulAlert();
+            recruitmentPage.GoToRecruitmentNavigators("Candidates");
+            addEmployee.DoesFieldExists(employee.WholeName);
+            addEmployee.DeleteFieldFromList(employee.WholeName);
+            addEmployee.SearchForEmployee(employee.FullName);
+            addEmployee.SubmitDetails();
+            addEmployee.DoesNoRecordsFoundExists();
         }
     }
 }

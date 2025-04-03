@@ -1,4 +1,5 @@
-﻿using DiplomaTests.Utility;
+﻿using DiplomaTests.Components;
+using DiplomaTests.Utility;
 using OpenQA.Selenium;
 
 namespace DiplomaTests.Pages.RecruitmentPage
@@ -15,8 +16,7 @@ namespace DiplomaTests.Pages.RecruitmentPage
 
         readonly By AlertOnCreatingVacancy = By.XPath("//div[@class='oxd-toast-start']");
 
-        public RecruitmentPage Recruitment => new RecruitmentPage();
-        private TableHelper _tableHelper = new TableHelper();
+        private TableComponent _TableComponent = new TableComponent();
 
         public void GoToRecruitmentNavigators(string navigationName)
         {
@@ -24,44 +24,24 @@ namespace DiplomaTests.Pages.RecruitmentPage
             NavigateToVacancies.Click();
         }
 
-        public void ClickAddButton()
-        {
-            AddButton.Click();
-        }
+        public void ClickAddButton() => AddButton.Click();
 
         public void InputData(string vacancieName, string hiringManager)
         {
             InputVacancieName.SendKeys(vacancieName);
             InputHiringManager.SelectCustomDropdownOptionBySendKeys(hiringManager);
-            OpenJobTitleDropDown.SelectCustomDropdownOptionByClick("Automaton Tester");
+            OpenJobTitleDropDown.SelectCustomDropdownOptionByClick("Automation Tester");
         }
 
-        public void SaveData()
-        {
-            SaveButton.Click();
-        }
+        public void SaveData() => SaveButton.Click();
 
-        public void WaitForsuccessfulAlert()
-        {
-            new WebElementWrapper().IsElementDisplayed(AlertOnCreatingVacancy);
-        }
+        public void WaitForsuccessfulAlert() => new WebElementWrapper().IsElementDisplayed(AlertOnCreatingVacancy);
 
-        public bool DoesVacancyExist(string vacancyName)
-        {
-            var result = _tableHelper.DoesRowExist(vacancyName);
+        public bool DoesVacancyExist(string vacancyName) => _TableComponent.DoesRowExist(vacancyName);
 
-            return result;
-        }
+        public void SelectVacancyCheckBox(string vacancyName) => _TableComponent.SelectCheckboxInRow(vacancyName);
 
-        public void SelectVacancyCheckBox(string vacancyName)
-        {
-            _tableHelper.SelectCheckboxInRow(vacancyName);
-        }
-
-        public void DeleteVacancy()
-        {
-            _tableHelper.DeleteSelectedRows();
-        }
+        public void DeleteVacancy() => _TableComponent.DeleteSelectedRows();
 
         public bool DoesVacancyNotExist(string vacancyName, int timeout = 3)
         {
@@ -70,7 +50,7 @@ namespace DiplomaTests.Pages.RecruitmentPage
                 var wait = BrowserFactory.BrowserFactory.GetWait(timeout);
                 var result = wait.Until(driver =>
                 {
-                    return !_tableHelper.DoesRowExist(vacancyName);
+                    return !_TableComponent.DoesRowExist(vacancyName);
                 });
 
                 return result;
@@ -81,14 +61,10 @@ namespace DiplomaTests.Pages.RecruitmentPage
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
 
-        public void InputEmailData(string email)
-        {
-            InputEmail.SendKeys(email);
-        }
+        public void InputEmailData(string email) => InputEmail.SendKeys(email);
     }
 }

@@ -1,4 +1,5 @@
-﻿using DiplomaTests.Utility;
+﻿using DiplomaTests.Components;
+using DiplomaTests.Utility;
 using OpenQA.Selenium;
 
 namespace DiplomaTests.Pages.PIMPage
@@ -28,18 +29,13 @@ namespace DiplomaTests.Pages.PIMPage
         readonly By AlertNoRecordsFound = By.XPath("//div[@aria-live='assertive']");
         readonly By SkillFound = By.XPath("//div[@role='row' and normalize-space()='Java']");
 
-        public PIMPage EmployeeDetails => new PIMPage();
-
-        private TableHelper _tableHelper = new TableHelper();
+        private TableComponent _TableComponent = new TableComponent();
 
         public PIMPage() : base()
         {
         }
 
-        public void ClickAddButton()
-        {
-            AddButton.Click();
-        }
+        public void ClickAddButton() => AddButton.Click();
 
         public void EnterEmployeeDetails(string FirstName, string MiddleName, string LastName)
         {
@@ -48,20 +44,11 @@ namespace DiplomaTests.Pages.PIMPage
             InputLastName.SendKeys(LastName);
         }
 
-        public void SubmitDetails()
-        {
-            SubmitButton.Click();
-        }
+        public void SubmitDetails() => SubmitButton.Click();
 
-        public bool AssertSuccessfullyAddedEmployeeAlert()
-        {
-            return new WebElementWrapper().IsElementDisplayed(AlertOnCreatingEmployee);
-        }
+        public bool AssertSuccessfullyAddedEmployeeAlert() => new WebElementWrapper().IsElementDisplayed(AlertOnCreatingEmployee);
 
-        public void GoToEmployeeListPage()
-        {
-            GoToEmployeeList.Click();
-        }
+        public void GoToEmployeeListPage() => GoToEmployeeList.Click();
 
         public void SearchForEmployee(string EmployeeName)
         {
@@ -69,20 +56,11 @@ namespace DiplomaTests.Pages.PIMPage
             SearchForElmployee.SendKeys(EmployeeName);
         }
 
-        public void SelectEmployeeFromDropDown()
-        {
-            DropDownEmployeeName.Click();
-        }
+        public void SelectEmployeeFromDropDown() => DropDownEmployeeName.Click();
+        
+        public bool DoesFieldExists(string firstAndMiddleName) => _TableComponent.DoesRowExist(firstAndMiddleName);
 
-        public bool DoesFieldExists(string firstAndMiddleName)
-        {
-            return _tableHelper.DoesRowExist(firstAndMiddleName);
-        }
-
-        public bool DoesNoRecordsFoundExists()
-        {
-            return new WebElementWrapper().IsElementDisplayed(AlertNoRecordsFound);
-        }
+        public bool DoesNoRecordsFoundExists() => new WebElementWrapper().IsElementDisplayed(AlertNoRecordsFound);
 
         public bool DoesRecordNotExist(string vacancyName, int timeout = 3)
         {
@@ -91,7 +69,7 @@ namespace DiplomaTests.Pages.PIMPage
                 var wait = BrowserFactory.BrowserFactory.GetWait(timeout);
                 var result = wait.Until(driver =>
                 {
-                    return !_tableHelper.DoesRowExist(vacancyName);
+                    return !_TableComponent.DoesRowExist(vacancyName);
                 });
 
                 return result;
@@ -102,21 +80,17 @@ namespace DiplomaTests.Pages.PIMPage
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
 
         public void DeleteFieldFromList(string employeeFullName)
         {
-            _tableHelper.ClickActionButtonInRow(employeeFullName, "bi-trash");
+            _TableComponent.ClickActionButtonInRow(employeeFullName, "bi-trash");
             ConfirmDeleteEmployee.Click();
         }
 
-        public void EditEmployee(string employeeFullName)
-        {
-            _tableHelper.ClickActionButtonInRow(employeeFullName, "bi-pencil-fill");
-        }
+        public void EditEmployee(string employeeFullName) => _TableComponent.ClickActionButtonInRow(employeeFullName, "bi-pencil-fill");
 
         public void NavigateToTab(string tabName)
         {
@@ -124,25 +98,13 @@ namespace DiplomaTests.Pages.PIMPage
             NavigationTab.Click();
         }
 
-        public void AddSkill()
-        {
-            AddSkillButton.Click();
-        }
+        public void AddSkill() => AddSkillButton.Click();
 
-        public void SelectSkill(string skillName)
-        {
-            OpenSkillDropDown.SelectCustomDropdownOptionByClick(skillName);
-        }
+        public void SelectSkill(string skillName) => OpenSkillDropDown.SelectCustomDropdownOptionByClick(skillName);
 
-        public bool DoesNewSkillExists()
-        {
-            return new WebElementWrapper().IsElementDisplayed(SkillFound);
-        }
+        public bool DoesNewSkillExists() => new WebElementWrapper().IsElementDisplayed(SkillFound);
 
-        public void GoToCustomFields()
-        {
-            ConfigurationDropDown.SelectCustomDropdownOptionByClick("Custom Fields");
-        }
+        public void GoToCustomFields() => ConfigurationDropDown.SelectCustomDropdownOptionByClick("Custom Fields");
 
         public void FillOutCustomFieldForm(string fieldName)
         {

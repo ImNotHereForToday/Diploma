@@ -17,7 +17,6 @@ namespace DiplomaTests.Tests.AuthenticationTests
             loginPage.EnterUsername("admin123");
             loginPage.ClickResetPassword();
             loginPage.AssertConfirmationMessage(ForgotPasswordSuccess);
-
         }
     }
 }

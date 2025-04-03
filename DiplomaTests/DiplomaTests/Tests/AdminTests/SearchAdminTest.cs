@@ -14,10 +14,9 @@ namespace DiplomaTests.Tests.AdminTests
         {
             var username = "aaaaa";
             LoginAsValidUser();
-            var validateAdminFunction = homePage.LMN.CLickAdminMenu("Admin");
-            validateAdminFunction.adminPage.SearchForUser(username);
-            validateAdminFunction.adminPage.DoesUserExist(username);
-
+            var validateAdminFunction = homePage.LMN.CLickAdminMenu();
+            validateAdminFunction.SearchForUser(username);
+            validateAdminFunction.DoesUserExist(username);
         }
     }
 }

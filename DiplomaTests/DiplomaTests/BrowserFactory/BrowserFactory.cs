@@ -10,10 +10,8 @@ namespace DiplomaTests.BrowserFactory
     public class BrowserFactory
     {
         public static IWebDriver Driver { get; set; }
-        public static WebDriverWait GetWait(int timeout = 5)
-        {
-            return new WebDriverWait(Driver, TimeSpan.FromSeconds(timeout));
-        }
+        public static WebDriverWait GetWait(int timeout = 5) => new WebDriverWait(Driver, TimeSpan.FromSeconds(timeout));
+        
         public static void InitializeDriver(BrowserType browserType)
         {
             switch (browserType)

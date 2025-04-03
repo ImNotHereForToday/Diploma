@@ -14,14 +14,14 @@ namespace DiplomaTests.Tests.PIMTests
         {
             var fieldName = "aAaA";
             LoginAsValidUser();
-            var addNewEmployeePage = homePage.LMN.CLickPIMMenu("PIM");
-            addNewEmployeePage.EmployeeDetails.GoToCustomFields();
-            addNewEmployeePage.EmployeeDetails.ClickAddButton();
-            addNewEmployeePage.EmployeeDetails.FillOutCustomFieldForm(fieldName);
-            addNewEmployeePage.EmployeeDetails.SubmitDetails();
-            addNewEmployeePage.EmployeeDetails.DoesFieldExists(fieldName);
-            addNewEmployeePage.EmployeeDetails.DeleteFieldFromList(fieldName);
-            addNewEmployeePage.EmployeeDetails.DoesRecordNotExist(fieldName);
+            var addNewEmployeePage = homePage.LMN.CLickPIMMenu();
+            addNewEmployeePage.GoToCustomFields();
+            addNewEmployeePage.ClickAddButton();
+            addNewEmployeePage.FillOutCustomFieldForm(fieldName);
+            addNewEmployeePage.SubmitDetails();
+            addNewEmployeePage.DoesFieldExists(fieldName);
+            addNewEmployeePage.DeleteFieldFromList(fieldName);
+            addNewEmployeePage.DoesRecordNotExist(fieldName);
         }
     }
 }

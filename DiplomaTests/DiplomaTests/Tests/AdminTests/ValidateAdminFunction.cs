@@ -13,10 +13,10 @@ namespace DiplomaTests.Tests.AdminTests
         public void AdminFunction()
         {
             LoginAsValidUser();
-            var validateAdminFunction = homePage.LMN.CLickAdminMenu("Admin");
-            validateAdminFunction.adminPage.UserManagmentNavigationExist();
-            validateAdminFunction.adminPage.GoToDropDownLink("span" , "Job" , "Job Titles");
-            validateAdminFunction.adminPage.AssertThatTitleExists("Job Titles");
+            var validateAdminFunction = homePage.LMN.CLickAdminMenu();
+            validateAdminFunction.UserManagmentNavigationExist();
+            validateAdminFunction.GoToDropDownLink("span" , "Job" , "Job Titles");
+            validateAdminFunction.AssertThatTitleExists("Job Titles");
         }
     }
 }

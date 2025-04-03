@@ -1,4 +1,5 @@
 ﻿using DiplomaTests.Utility;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using OpenQA.Selenium;
 
 namespace DiplomaTests.Pages.Authentication
@@ -13,8 +14,8 @@ namespace DiplomaTests.Pages.Authentication
         private WebElementWrapper ForgotPasswordButton => FindElement(By.XPath("//p[@class='oxd-text oxd-text--p orangehrm-login-forgot-header']"));
         private WebElementWrapper ResetPasswordButton => FindElement(By.XPath("//button[@type='submit']"));
         private WebElementWrapper ConfirmationMessageTitle => FindElement(By.XPath("//h6"));
+        private WebElementWrapper ErrorMessage => FindElement(By.XPath("//p[text()='Invalid credentials']"));
 
-        readonly By ErrorMessage = By.XPath("//p[text()='Invalid credentials']");
 
         public LoginPage() : base()
         {
@@ -26,10 +27,7 @@ namespace DiplomaTests.Pages.Authentication
             UsernameField.SendKeys(username);
         }
 
-        public void EnterUsername(string Username)
-        {
-            UsernameField.SendKeys(Username);
-        }
+        public void EnterUsername(string Username) => UsernameField.SendKeys(Username);
 
         public void EnterPassword()
         {
@@ -37,31 +35,16 @@ namespace DiplomaTests.Pages.Authentication
             PasswordField.SendKeys(password);
         }
 
-        public void EnterPassword(string Password)
-        {
-            PasswordField.SendKeys(Password);
-        }
+        public void EnterPassword(string Password) => PasswordField.SendKeys(Password);
+        
+        public void ClickLoginButton() => LoginButton.Click();
 
-        public void ClickLoginButton()
-        {
-            LoginButton.Click();
-        }
+        public string GetErrorMessage() => ErrorMessage.GetText();
 
-        public bool GetInvalidLoginMessage()
-        {
-            return new WebElementWrapper().IsElementDisplayed(ErrorMessage);
-        }
-
-        public void ClickForgotPasswordButton()
-        {
-            ForgotPasswordButton.Click();
-        }
-
-        public void ClickResetPassword()
-        {
-            ResetPasswordButton.Click();
-        }
-
+        public void ClickForgotPasswordButton() => ForgotPasswordButton.Click();
+        
+        public void ClickResetPassword() => ResetPasswordButton.Click();
+        
         public void AssertConfirmationMessage(string message)
         {
             Assert.That(ConfirmationMessageTitle.GetText(), Is.EqualTo(message));

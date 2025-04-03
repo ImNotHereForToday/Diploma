@@ -13,19 +13,10 @@ namespace DiplomaTests.Pages.Authentication
         {
         }
 
-        public void OpenBurgerDropDown()
-        {
-            BurgerButton.Click();
-        }
-
-        public void ClickLogoutButton()
-        {
-            LogoutButton.Click();
-        }
-
-        public void VerifyLoginTitle()
-        {
-            LoginTitle.GetText().Equals("Login");
-        }
+        public void OpenBurgerDropDown() => BurgerButton.Click();
+        
+        public void ClickLogoutButton() => LogoutButton.Click();
+        
+        public void VerifyLoginTitle() => Assert.That(LoginTitle.GetText(), Is.EqualTo("Login"));
     }
 }

@@ -13,12 +13,12 @@ namespace DiplomaTests.Tests.LeaveTests
         public void AssignLeave()
         {
             LoginAsValidUser();
-            var leavePage = homePage.LMN.CLickLeaveMenu("Leave");
-            leavePage.Leave.GoToAssignLeave();
-            leavePage.Leave.EnterLeaveData("DontDelete DontDelete DontDelete" , "CAN - Vacation");
-            leavePage.Leave.AssignLeave();
-            leavePage.Leave.ConfirmLeaveAssignment();
-            leavePage.Leave.WaitForsuccessfulAlert();
+            var leavePage = homePage.LMN.CLickLeaveMenu();
+            leavePage.GoToAssignLeave();
+            leavePage.EnterLeaveData("DontDelete DontDelete DontDelete" , "CAN - Vacation");
+            leavePage.AssignLeave();
+            leavePage.ConfirmLeaveAssignment();
+            leavePage.WaitForsuccessfulAlert();
         }
     }
 }

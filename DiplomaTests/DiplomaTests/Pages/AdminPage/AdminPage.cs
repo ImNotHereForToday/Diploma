@@ -1,7 +1,8 @@
-﻿using DiplomaTests.Utility;
+﻿using DiplomaTests.Components;
+using DiplomaTests.Utility;
 using OpenQA.Selenium;
 
-namespace DiplomaTests.Pages.AdminPage
+namespace DiplomaTests.Pages
 {
     public class AdminPage : PageBase
     {
@@ -17,14 +18,10 @@ namespace DiplomaTests.Pages.AdminPage
         private WebElementWrapper SearchForAdminUser => FindElement(By.XPath("//div[@class='oxd-table-filter-area']//input[@class='oxd-input oxd-input--active']"));
 
         readonly By UserManagmentNavigation = By.XPath("//nav[@aria-label='Topbar Menu']");
-        private TableHelper _tableHelper = new TableHelper();
+        private TableComponent _TableComponent = new TableComponent();
 
-        public AdminPage adminPage => new AdminPage();
-
-        public bool UserManagmentNavigationExist()
-        {
-            return new WebElementWrapper().IsElementDisplayed(UserManagmentNavigation);
-        }
+        public bool UserManagmentNavigationExist() => new WebElementWrapper().IsElementDisplayed(UserManagmentNavigation);
+        
 
         public void GoToNavigationLink(string attribute , string navName)
         {
@@ -40,15 +37,9 @@ namespace DiplomaTests.Pages.AdminPage
             DropDown.SelectCustomDropdownOptionByClick(optionName);
         }
 
-        public void AssertThatTitleExists(string titleText)
-        {
-            Assert.That(TitleText.GetText(), Is.EqualTo(titleText));
-        }
+        public void AssertThatTitleExists(string titleText) => Assert.That(TitleText.GetText(), Is.EqualTo(titleText));
 
-        private string GetNationality()
-        {
-            return FirstNationality.GetText().Trim();
-        }
+        private string GetNationality() => FirstNationality.GetText().Trim();
 
         private void EditNationality(string newValue)
         {
@@ -77,10 +68,7 @@ namespace DiplomaTests.Pages.AdminPage
             AssertNationality(originalText);
         }
 
-        public void AddJobTitle()
-        {
-            AddButton.Click();
-        }
+        public void AddJobTitle() => AddButton.Click();
 
         public void FillOutJobTitleForm(string jobTitle)
         {
@@ -95,7 +83,7 @@ namespace DiplomaTests.Pages.AdminPage
                 var wait = BrowserFactory.BrowserFactory.GetWait(timeout);
                 var result = wait.Until(driver =>
                 {
-                    return !_tableHelper.DoesRowExist(jobTitle);
+                    return !_TableComponent.DoesRowExist(jobTitle);
                 });
 
                 return result;
@@ -111,26 +99,12 @@ namespace DiplomaTests.Pages.AdminPage
             }
         }
 
-        public void SelectJobTitleCheckBox(string jobTitle)
-        {
-            _tableHelper.SelectCheckboxInRow(jobTitle);
-        }
+        public void SelectJobTitleCheckBox(string jobTitle) => _TableComponent.SelectCheckboxInRow(jobTitle);
 
-        public void DeleteJobTitle()
-        {
-            _tableHelper.DeleteSelectedRows();
-        }
+        public void DeleteJobTitle() => _TableComponent.DeleteSelectedRows();
 
-        public void SearchForUser(string userName)
-        {
-            SearchForAdminUser.SendKeys(userName);
-        }
+        public void SearchForUser(string userName) => SearchForAdminUser.SendKeys(userName);
 
-        public bool DoesUserExist(string username)
-        {
-            var result = _tableHelper.DoesRowExist(username);
-
-            return result;
-        }
+        public bool DoesUserExist(string username) => _TableComponent.DoesRowExist(username);
     }
 }

@@ -12,18 +12,17 @@ namespace DiplomaTests.Tests.AdminTests
         [Test]
         public void AddJobTitle()
         {
-            var jobTitle = "Job Title";
+            var jobTitle = "AaAa";
             LoginAsValidUser();
-            var validateAdminFunction = homePage.LMN.CLickAdminMenu("Admin");
-            validateAdminFunction.adminPage.UserManagmentNavigationExist();
-            validateAdminFunction.adminPage.GoToDropDownLink("span", "Job", "Job Titles");
-            validateAdminFunction.adminPage.AssertThatTitleExists("Job Titles");
-            validateAdminFunction.adminPage.AddJobTitle();
-            validateAdminFunction.adminPage.FillOutJobTitleForm(jobTitle);
-            validateAdminFunction.adminPage.SelectJobTitleCheckBox(jobTitle);
-            validateAdminFunction.adminPage.DeleteJobTitle();
-            validateAdminFunction.adminPage.DoesJobTitleNotExist(jobTitle);
-
+            var validateAdminFunction = homePage.LMN.CLickAdminMenu();
+            validateAdminFunction.UserManagmentNavigationExist();
+            validateAdminFunction.GoToDropDownLink("span", "Job", "Job Titles");
+            validateAdminFunction.AssertThatTitleExists("Job Titles");
+            validateAdminFunction.AddJobTitle();
+            validateAdminFunction.FillOutJobTitleForm(jobTitle);
+            validateAdminFunction.SelectJobTitleCheckBox(jobTitle);
+            validateAdminFunction.DeleteJobTitle();
+            validateAdminFunction.DoesJobTitleNotExist(jobTitle);
         }
     }
 }

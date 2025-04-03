@@ -2,7 +2,6 @@
 
 namespace DiplomaTests.Tests
 {
-
     [TestFixture(BrowserType.Chrome)]
     public class LoginTest : TestBase
     {
@@ -19,10 +18,11 @@ namespace DiplomaTests.Tests
         [Test, Order(2)]
         public void InvalidUserCannotLogin()
         {
+            var errorMessage = "Invalid credentials";
             loginPage.EnterUsername("aaaa");
             loginPage.EnterPassword("bbbb");
             loginPage.ClickLoginButton();
-            loginPage.GetInvalidLoginMessage();
+            Assert.That(loginPage.GetErrorMessage(), Is.EqualTo(errorMessage));
         }
     }
 }

@@ -12,22 +12,21 @@ namespace DiplomaTests.Tests.RecruitmentTests
         [Test]
         public void ValidateRecruitmentManagment()
         {
-            var VacancyName = "AaAaA";
+            var vacancyName = "AaAaA";
             var navigationName = "Vacancies";
             LoginAsValidUser();
-            var recruitmentPage = homePage.LMN.CLickRecruitmentMenu("Recruitment");
-            recruitmentPage.Recruitment.GoToRecruitmentNavigators(navigationName);
-            recruitmentPage.Recruitment.ClickAddButton();
-            recruitmentPage.Recruitment.InputData(VacancyName , "DontDelete DontDelete DontDelete");
-            recruitmentPage.Recruitment.SaveData();
-            recruitmentPage.Recruitment.WaitForsuccessfulAlert();
-            recruitmentPage.Recruitment.GoToRecruitmentNavigators(navigationName);
-            recruitmentPage.Recruitment.DoesVacancyExist(VacancyName);
-            recruitmentPage.Recruitment.SelectVacancyCheckBox(VacancyName);
-            recruitmentPage.Recruitment.DeleteVacancy();
-            recruitmentPage.Recruitment.GoToRecruitmentNavigators(navigationName);
-            recruitmentPage.Recruitment.DoesVacancyNotExist(VacancyName);
-
+            var recruitmentPage = homePage.LMN.CLickRecruitmentMenu();
+            recruitmentPage.GoToRecruitmentNavigators(navigationName);
+            recruitmentPage.ClickAddButton();
+            recruitmentPage.InputData(vacancyName, "DontDelete DontDelete DontDelete");
+            recruitmentPage.SaveData();
+            recruitmentPage.WaitForsuccessfulAlert();
+            recruitmentPage.GoToRecruitmentNavigators(navigationName);
+            recruitmentPage.DoesVacancyExist(vacancyName);
+            recruitmentPage.SelectVacancyCheckBox(vacancyName);
+            recruitmentPage.DeleteVacancy();
+            recruitmentPage.GoToRecruitmentNavigators(navigationName);
+            recruitmentPage.DoesVacancyNotExist(vacancyName);
         }
     }
 }

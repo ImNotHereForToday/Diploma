@@ -13,7 +13,7 @@ namespace DiplomaTests.Tests.DashBoardPage
         public void ValidateDashboardAccess()
         {
             LoginAsValidUser();
-            var validateDashboardAccess = homePage.LMN.CLickDashboardMenu("Dashboard");
+            var validateDashboardAccess = homePage.LMN.CLickDashboardMenu();
             validateDashboardAccess.ValidateThatElementsAreDisplayed();
         }
     }

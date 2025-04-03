@@ -13,10 +13,10 @@ namespace DiplomaTests.Tests.AdminTests
         public void EditNationality()
         {
             LoginAsValidUser();
-            var validateAdminFunction = homePage.LMN.CLickAdminMenu("Admin");
-            validateAdminFunction.adminPage.UserManagmentNavigationExist();
-            validateAdminFunction.adminPage.GoToNavigationLink("a" , "Nationalities");
-            validateAdminFunction.adminPage.EditNationalityAndVerify();
+            var validateAdminFunction = homePage.LMN.CLickAdminMenu();
+            validateAdminFunction.UserManagmentNavigationExist();
+            validateAdminFunction.GoToNavigationLink("a" , "Nationalities");
+            validateAdminFunction.EditNationalityAndVerify();
         }
     }
 }
